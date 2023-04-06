@@ -11,10 +11,10 @@ import time
 
 def flow_process(frame):
     display_frame = frame.copy()  
-    rects = last_rects
-    age = last_age
-    gender = last_gender
-    shape = last_shape
+    rects = 1
+    age = 23
+    gender = "female"
+    shape = 163
     
     # convert the frame to gray scale before performing face detection
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)

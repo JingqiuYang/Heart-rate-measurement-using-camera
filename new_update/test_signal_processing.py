@@ -5,9 +5,9 @@ import sys
 from imutils import face_utils
 from face_utilities import Face_utilities
 from signal_processing import Signal_processing
-
 from pyqtgraph.Qt import QtGui, QtCore
 import pyqtgraph as pg
+from PyQt5 import QtWidgets
 
 
 if __name__ == "__main__":
@@ -53,12 +53,13 @@ if __name__ == "__main__":
     bpm = 0
     
     #plotting
-    app = QtGui.QApplication([])  
-    
-    win = pg.GraphicsWindow(title="plotting")
+    app = QtWidgets.QApplication([])
+
+    win = pg.GraphicsLayoutWidget(show=True,title="plotting")
     p1 = win.addPlot(title="FFT")
-    p2 = win.addPlot(title ="Signal")
+    p2 = win.addPlot(title="Signal")
     win.resize(1200,600)
+    win.show()
     
     def update():
         p1.clear()
@@ -70,7 +71,7 @@ if __name__ == "__main__":
     
     timer = QtCore.QTimer()
     timer.timeout.connect(update)
-    timer.start(300)
+    timer.start(500)
     
     while True:
         # grab a frame -> face detection -> crop the face -> 68 facial landmarks -> get mask from those landmarks
@@ -107,7 +108,7 @@ if __name__ == "__main__":
             cv2.imshow("frame",frame)
             print(time.time()-t0)
             
-            cv2.destroyWindow("face")
+            cv2.destroyAllWindow("face")
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 cv2.destroyAllWindows()
                 timer.stop()

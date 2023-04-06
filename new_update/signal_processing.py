@@ -17,6 +17,8 @@ class Signal_processing():
         g = []
         for ROI in ROIs:
             g.append(np.mean(ROI[:,:,1]))
+
+
         #b = np.mean(ROI[:,:,2])
         #return r, g, b
         output_val = np.mean(g)
@@ -48,9 +50,16 @@ class Signal_processing():
         L = len(data_buffer)
         
         even_times = np.linspace(times[0], times[-1], L)
+        ##返回指定区间内的均匀间隔的数字。返回num个均匀间隔的样本，在区间[start, stop]内计算。区间的端点可以选择性地被排除。
+        ##设定插值的点，原序列的区间是[times[0], times[-1]]，我们所谓的插值就是在这区间内均匀取L个点，然后作为我们插值的位置
         
         interp = np.interp(even_times, times, data_buffer)
+        ##插值是离散函数逼近的重要方法，利用它可通过函数在有限个点处的取值状况，估算出函数在其他点处的近似值。与拟合不同的是，要求曲线通过所有的已知数据
+        ##返回给定的离散数据点（xp，fp）的一维片状线性内插函数，在x处评估。(横坐标为times，纵坐标为databuffer，在此基础上再插入eventime个点)
+
         interpolated_data = np.hamming(L) * interp
+        #This signal was smoothed with a moving average filter and band-pass filtered using a Hamming window
+
         return interpolated_data
         
     def fft(self, data_buffer, fps):
